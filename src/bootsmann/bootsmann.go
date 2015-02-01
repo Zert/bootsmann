@@ -162,21 +162,22 @@ func doFile(file string, sparkStop chan bool, vars, dirs map[string]string) {
 	buf, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Error("Cannot open file %s: %s", file, err)
-	}
+	} else {
 
-	s := string(buf)
-	for vn, vv := range vars {
-		tmpl, err := makeTemplate(dirs, vn)
-		if err != nil {
-			log.Error(err.Error())
-		} else {
-			s = strings.Replace(s, tmpl, vv, -1)
+		s := string(buf)
+		for vn, vv := range vars {
+			tmpl, err := makeTemplate(dirs, vn)
+			if err != nil {
+				log.Error(err.Error())
+			} else {
+				s = strings.Replace(s, tmpl, vv, -1)
+			}
 		}
-	}
 
-	err = ioutil.WriteFile(file, []byte(s), 0644)
-	if err != nil {
-		log.Error("Cannot write to file %s: %s", file, err)
+		err = ioutil.WriteFile(file, []byte(s), 0644)
+		if err != nil {
+			log.Error("Cannot write to file %s: %s", file, err)
+		}
 	}
 
 	sparkStop <- true

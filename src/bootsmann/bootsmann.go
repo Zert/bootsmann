@@ -68,6 +68,8 @@ func doProcess(cf string) {
 			currentPath = getPath(l, lineNum)
 			directives[currentPath] = make(map[string]string)
 			vars[currentPath] = make(map[string]string)
+		} else if (len(l) > 0) && (l[0] == '#') {
+			// ignore comments
 		} else {
 			if vn, vv, ok := getVar(l, lineNum); ok {
 				if vn[0] == '$' {

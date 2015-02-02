@@ -2,7 +2,7 @@
 
 Rewrite all config file types on docker startup.
 
-Example of template sources:
+Example of parameters sources:
 
 ```
   # Declare global section
@@ -10,8 +10,8 @@ Example of template sources:
   # available in all sections if not overwritten
   [$global]
 
-  # Default template boundaries, separated by space
-  $template = #{{ }}
+  # Default placeholder boundaries, separated by space
+  $placeholder = #{{ }}
 
   # Name of variable and value
   GLOBVAR = 55
@@ -19,8 +19,8 @@ Example of template sources:
 
   # Process a config file
   [example/cfg1.conf]
-  # Overwrite default template boundaries
-  $template = %[[ ]]
+  # Overwrite default placeholder boundaries
+  $placeholder = %[[ ]]
   PARAM = "simple string"
 
   [example/cfg2.ini]
@@ -30,5 +30,5 @@ Example of template sources:
   # All files in this directory will be processed
   [example/dir/*]
   VAR = 1024
-  $template = !<< >>
+  $placeholder = !<< >>
 ```

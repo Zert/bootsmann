@@ -142,14 +142,14 @@ func processPath(path string, sparkStop chan bool,
 	}
 }
 
-func makeTemplate(dirs map[string]string, vn string) (tmpl string, err error) {
+func makePlaceholder(dirs map[string]string, vn string) (tmpl string, err error) {
 	t := "#{{ }}"
-	if template, ok := dirs["$template"]; ok {
-		t = template
+	if placeholder, ok := dirs["$placeholder"]; ok {
+		t = placeholder
 	}
 	ts := strings.Split(t, " ")
 	if len(ts) != 2 {
-		err = errors.New("Malformed template format: %s")
+		err = errors.New("Malformed placeholder format: %s")
 	} else {
 		tmpl = strings.Join([]string{ts[0], vn, ts[1]}, "")
 	}
@@ -166,7 +166,7 @@ func doFile(file string, sparkStop chan bool, vars, dirs map[string]string) {
 
 		s := string(buf)
 		for vn, vv := range vars {
-			tmpl, err := makeTemplate(dirs, vn)
+			tmpl, err := makePlaceholder(dirs, vn)
 			if err != nil {
 				log.Error(err.Error())
 			} else {
